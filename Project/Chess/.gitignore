@@ -1,0 +1,57 @@
+# Projects and makefiles
+!*.cmake
+!*.mk
+!*.dsp
+!*.dsw
+!*.csproj
+!*.vcproj
+!*.vcxproj
+!*.vcxproj.filters
+!*.sln
+!*.xcodeproj
+!*.xcconfig
+!*.vsprops
+!*.snippet
+!Makefile
+!Makefile.*
+!Settings.settings
+
+# Specific names
+!README
+!AUTHORS
+!LICENSE
+!FAQ
+!VERSION
+!ChangeLog
+
+# Ignore Unix backup files
+*~
+
+# Exceptions
+/*.sln
+/*.xcodeproj
+/Makefile
+/CMakeLists.txt
+/cmake-build-debug
+*.target.xml
+*.dll.config
+*.exe.config
+*.exe.manifest
+/.kdev4/
+/Binaries
+/DerivedDataCache
+/Intermediate
+
+# Ignore any saved local files
+/Saved
+
+# Ignore VS / VS Code settings directory
+.vs
+.vscode
+
+# Ignore CLion directory
+.idea/
+
+# Annoying windows files
+[Dd]esktop.ini
+

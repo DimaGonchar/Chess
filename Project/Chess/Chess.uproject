@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{246CFD3B-4C16-EFCB-EDEB-44B0574962E3}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Chess",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}
