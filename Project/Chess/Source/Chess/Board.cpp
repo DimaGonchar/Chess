@@ -2,6 +2,7 @@
 
 
 #include "Board.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABoard::ABoard()
@@ -12,8 +13,8 @@ ABoard::ABoard()
 	Root=CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	RootComponent = Root;
 
-	StaticMesh =CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Board Static Mesh"));
-	StaticMesh->AttachTo(Root);
+	m_boardStaticMesh =CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Board Static Mesh"));
+	m_boardStaticMesh->AttachTo(Root);
 }
 
  void ABoard::Init()
@@ -65,11 +66,19 @@ ABoard::ABoard()
 	//}
 }
 
+ TArray<ASquare*> ABoard::Sort(const TArray<ASquare*>& Squares)
+ {
+	TArray<ASquare*> Output=Squares;
+	Output.Sort();
+	return Output;
+ }
+
 // Called when the game starts or when spawned
 void ABoard::BeginPlay()
 {
+	TArray<AActor*> res;
 	Super::BeginPlay();
-	
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(),m_squareAssest, res);
 }
 
 // Called every frame

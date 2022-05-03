@@ -28,33 +28,33 @@ enum class EHorisontales  : uint8
 	H_4	UMETA(DisplayName="4"),
 	H_5	UMETA(DisplayName="5"),
 	H_6	UMETA(DisplayName="6"),
-	H_7 UMETA(DisplaName="7"),
+	H_7 UMETA(DisplayName="7"),
 	H_8	UMETA(DisplayName="8"),
 };
 
 UENUM()
 enum class EColor : uint8
 {
+	C_None		UMETA(DisplayName="None"),
 	C_White		UMETA(DisplayName="White"),
 	C_Black		UMETA(DisplayName="Black"),
 };
 
-USTRUCT()
-struct FPosition
+USTRUCT(BlueprintType)
+struct CHESS_API FPosition
 {
 	GENERATED_BODY()
 
 	FPosition();
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	EVerticales verticalPos;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	EHorisontales horisontalPos;
-
 };
 
-UCLASS()
+UCLASS(BlueprintType,Blueprintable)
 class CHESS_API ASquare : public AActor
 {
 	GENERATED_BODY()
@@ -63,44 +63,60 @@ public:
 	// Sets default values for this actor's properties
 	ASquare();
 
-	UPROPERTY(VisibleAnywhere)
+protected:
+
+	UPROPERTY(EditAnywhere, meta=(DisplayName="Root Componemt"), Category="Root Component")
 	USceneComponent* Root;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(DisplayName="Square Static Mesh"), Category = "Static Mesh")
-	UStaticMeshComponent* StaticMesh;
+	UStaticMeshComponent* m_squareStaticMesh;
 
-	UPROPERTY(EditAnywhere, Category = "Position on Board")
+	UPROPERTY(EditAnywhere, meta=(DisplayName="Position on Board"), Category = "Position")
 	FPosition m_positionOnBoard;
 
-	UPROPERTY(EditAnywhere,  Category = "Base Color")
-	EColor m_color;
+	UPROPERTY(EditAnywhere, meta=(DisplayName="Color"), Category = "Color")
+	EColor m_color=EColor::C_None;
 
 	UPROPERTY(EditAnywhere, Category ="Index on board")
 	uint32 m_indexOnBoard = 0;
 
-	UFUNCTION(Category ="Setters")
-	void SetIndex(const uint32 index);
-	
-	UFUNCTION(Category ="Getters")
-	const uint32 GetIndex() const;
+public:
 
-	UFUNCTION(Category ="Setters")
+	const static TMap<uint32, EColor> mapOfIndexAndColorCorrespondence;
+
+	const static EColor GetColorAssociateWithIndex(const uint32 SquareIndex);
+
+	UFUNCTION(BlueprintCallable)
+	void SetIndex(const int index);
+	
+	UFUNCTION(BlueprintCallable)
+	const int GetIndex() const;
+
+	UFUNCTION(BlueprintCallable)
 	void SetPosition(const FPosition Pos);
 
-	UFUNCTION(Category ="Getters")
+	UFUNCTION(BlueprintPure)
 	const FPosition& GetPositionOnBoard() const;
 
-	UFUNCTION(Category ="Setters")
+	UFUNCTION(BlueprintCallable)
 	void SetColor(const EColor Color);
 
-	UFUNCTION(Category ="Getters")
+	UFUNCTION(BlueprintPure)
 	const EColor GetColor()const;
 
-	UFUNCTION(Category = "Getters")
+	UFUNCTION(BlueprintPure)
 	const EVerticales GetVertical() const;
 
-	UFUNCTION(Category = "Getters")
+	UFUNCTION(BlueprintPure)
 	const EHorisontales GetHorisontal() const;
+
+	UFUNCTION(BlueprintPure)
+	const FVector GetSquareLocationInWorld();
+
+	FORCEINLINE bool operator < (const ASquare& OtherSquare) const
+	{
+		return this->GetIndex() < OtherSquare.GetIndex();
+	}
 
 protected:
 	// Called when the game starts or when spawned
@@ -111,3 +127,4 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 };
+
