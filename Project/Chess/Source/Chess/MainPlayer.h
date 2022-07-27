@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "MainPlayer.generated.h"
 
+class UCameraComponent;
+
 UCLASS()
 class CHESS_API AMainPlayer : public APawn
 {
