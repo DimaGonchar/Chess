@@ -12,8 +12,8 @@ AShape::AShape()
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 	RootComponent = Root;
 
-	m_figureStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Shape Static Mesh"));
-	m_figureStaticMesh->AttachTo(Root);
+	m_shapeStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Shape Static Mesh"));
+	m_shapeStaticMesh->AttachToComponent(Root, FAttachmentTransformRules::SnapToTargetIncludingScale);
 
 }
 
@@ -38,6 +38,12 @@ void AShape::BeginPlay()
 void AShape::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void AShape::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
 

@@ -3,8 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
-#include <Chess/Square.h>
+#include "GameFramework/Pawn.h"
+#include "Chess/SquareComponent.h"
 #include "Shape.generated.h"
 
 UENUM(BlueprintType)
@@ -13,14 +13,14 @@ enum class EShapeUniqueId : uint8
 	Id_None		UMETA(DisplayName="None"),
 	Id_Pawn		UMETA(DisplayName="Pawn"),
 	Id_Rook		UMETA(DisplayName="Rook"),
-	Id_Horse	UMETA(DisplayName="Horse"),
-	Id_Officer	UMETA(DisplayName="Officer"),
+	Id_Knight	UMETA(DisplayName="Knight"),
+	Id_Bishop	UMETA(DisplayName="Bishop"),
 	Id_Queen	UMETA(DisplayName="Queen"),
 	Id_King		UMETA(DisplayName="King"),
 };
 
 UCLASS()
-class CHESS_API AShape : public AActor
+class CHESS_API AShape : public APawn
 {
 	GENERATED_BODY()
 	
@@ -34,7 +34,7 @@ protected:
 	USceneComponent* Root;
 
 	UPROPERTY(EditDefaultsOnly, meta=(DisplayName="Figure Static Mesh"), Category="Static Mesh")
-	UStaticMeshComponent* m_figureStaticMesh;
+	UStaticMeshComponent* m_shapeStaticMesh;
 
 	UPROPERTY(EditDefaultsOnly, meta=(DisplayName="Color"), Category="Color")
 	EColor m_color;
@@ -45,6 +45,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category="Unique Id")
 	EShapeUniqueId m_uniqueId=EShapeUniqueId::Id_None;
 
+	//Default square indexes where shape can be placement on start game
+	UPROPERTY(EditAnywhere, meta=(DisplayName="Default square indexes"))
+	TArray<uint32> m_defaultSquares;
 public:
 
 	UFUNCTION(BlueprintPure)
@@ -61,4 +64,5 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent);
 };

@@ -39,15 +39,12 @@ const TMap<uint32, EColor> USquareComponent::mapOfIndexAndColorCorrespondence
 	{62,	EColor::C_Black},	{63,	EColor::C_White}
 };
 
-
-
-
 USquareComponent::USquareComponent()
 {
 	Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root Component"));
 
 	m_squareStaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Square Static Mesh"));
-	m_squareStaticMesh->AttachTo(Root);
+	m_squareStaticMesh->AttachToComponent(Root, FAttachmentTransformRules::SnapToTargetIncludingScale);
 
 	AddTickPrerequisiteComponent(this);
 }
@@ -67,14 +64,14 @@ const int USquareComponent::GetIndex() const
 	return static_cast<int>(m_indexOnBoard);
 }
 
-void USquareComponent::SetPosition(const FPosition Pos)
+void USquareComponent::SetLocationOnBoard(const FPosition Pos)
 {
-	m_positionOnBoard = Pos;
+	m_locationOnBoard = Pos;
 }
 
-const FPosition& USquareComponent::GetPositionOnBoard() const
+const FPosition& USquareComponent::GetLocationOnBoard() const
 {
-	return m_positionOnBoard;
+	return m_locationOnBoard;
 }
 
 void USquareComponent::SetColor(const EColor Color)
@@ -87,19 +84,19 @@ const EColor USquareComponent::GetColor() const
 	return m_color;
 }
 
-const EVerticales USquareComponent::GetVertical() const
+const EVerticales USquareComponent::GetVerticalValue() const
 {
-	return m_positionOnBoard.verticalPos;
+	return m_locationOnBoard.verticalPos;
 }
 
-const EHorisontales USquareComponent::GetHorisontal() const
+const EHorisontales USquareComponent::GetHorisontalValue() const
 {
-	return m_positionOnBoard.horisontalPos;
+	return m_locationOnBoard.horisontalPos;
 }
 
-const FVector USquareComponent::GetSquareLocationInWorld()
+const FVector USquareComponent::GetLocationInWorld() 
 {
-	return this->K2_GetComponentLocation();
+	return this->GetComponentLocation();
 }
 
 
@@ -113,3 +110,6 @@ void USquareComponent::AddTickPrerequisiteComponent(UActorComponent* Prerequisit
 	Super::AddTickPrerequisiteComponent(PrerequisiteComponent);
 }
 
+FPosition::FPosition()
+{
+}
