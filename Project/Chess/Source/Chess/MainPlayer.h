@@ -7,6 +7,10 @@
 #include "Camera/CameraComponent.h"
 #include "MainPlayer.generated.h"
 
+<<<<<<< HEAD
+=======
+class UCameraComponent;
+>>>>>>> 810e0179ea7ae263bba87c8a125e7ab43f038541
 
 UCLASS()
 class CHESS_API AMainPlayer : public APawn
