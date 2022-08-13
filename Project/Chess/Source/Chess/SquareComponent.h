@@ -78,12 +78,12 @@ public:
 	UPROPERTY(EditAnywhere, meta = (DisplayName = "Color"), Category = "Color")
 	EColor m_color = EColor::C_None;
 
-	UPROPERTY(EditAnywhere, Category = "Index on board")
+	UPROPERTY(EditAnywhere, meta =(DisplayName = "Index on board"), Category = "Index on board")
 	uint32 m_indexOnBoard = 0;
 
 public:
 
-	const static EColor GetColorAssociateWithIndex(const uint32 SquareIndex);
+	const EColor GetColorAssociateWithIndex(const uint32 SquareIndex);
 
 	UFUNCTION(BlueprintCallable)
 	void SetIndex(const int index);
